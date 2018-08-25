@@ -1,0 +1,12 @@
+<Context>
+    <Resource name="getfit"
+              auth="Container"
+              type="javax.sql.DataSource"
+              maxActive="100"
+              maxIdle="30"
+              maxWait="10000"
+              username="root"
+              password="wanderboy"
+              driverClassName="com.mysql.cj.jdbc.Driver"
+              url="jdbc:mysql://localhost:3306/GetFit?&amp;useSSL=false&amp;serverTimezone=UTC"/>
+</Context>
