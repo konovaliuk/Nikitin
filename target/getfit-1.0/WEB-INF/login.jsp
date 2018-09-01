@@ -1,20 +1,24 @@
-<%@ page import="com.peregrine.getfit.entities.User" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: Peregrine
-  Date: 16.08.2018
-  Time: 14:20
-  To change this template use File | Settings | File Templates.
---%>
-<html>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="locale" var="loc"/>
+<c:if test="${user!=null}">
+    <c:redirect url="index.jsp"/>
+</c:if>
+<!DOCTYPE HTML>
+<html lang="${language}">
 <head>
-    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
     <title>Log in</title>
+
     <style><%@include file="../css/login.css"%></style>
     <!-- Bootstrap core CSS -->
     <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -31,19 +35,19 @@
 <body>
 <div class="container">
     <form class="form-signin" action="account" method="post">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading"><fmt:message key="SIGN_IN" bundle="${loc}"/></h2>
         <span class="invalid-login">${message}</span>
-        <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputEmail" class="sr-only"><fmt:message key="EMAIL" bundle="${loc}"/></label>
+        <input type="email" id="inputEmail" name="email" class="form-control" placeholder="<fmt:message key="EMAIL" bundle="${loc}"/>" required autofocus>
 
-        <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <label for="inputPassword" class="sr-only"><fmt:message key="PASSWORD" bundle="${loc}"/></label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="<fmt:message key="PASSWORD" bundle="${loc}"/>" required>
         <div class="checkbox">
             <label>
                 <input type="checkbox" value="remember-me"> Remember me
             </label>
         </div>
-        <button class="btn btn-lg btn-primary btn-block" type="submit">Log in</button>
+        <button class="btn btn-lg btn-primary btn-block" type="submit"><fmt:message key="LOGIN" bundle="${loc}"/></button>
         <input type="hidden" name="command" value="login">
     </form>
 

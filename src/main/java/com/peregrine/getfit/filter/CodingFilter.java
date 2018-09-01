@@ -1,25 +1,21 @@
 package com.peregrine.getfit.filter;
 
-import com.peregrine.getfit.util.Pages;
-
 import javax.servlet.*;
-import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
+/** Фильтр для кодировки страниц*/
 public class CodingFilter implements Filter {
     private FilterConfig filterConfig;
     @Override
-    public void init(FilterConfig filterConfig) throws ServletException {
+    public void init(FilterConfig filterConfig) {
         this.filterConfig = filterConfig;
     }
-    public FilterConfig getFilterConfig() {
-        return filterConfig;
-    }
+
 
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
-        servletRequest.setCharacterEncoding("utf-8");
-        servletResponse.setCharacterEncoding("utf-8");
+        servletRequest.setCharacterEncoding("UTF-8");
+        servletResponse.setCharacterEncoding("UTF-8");
         filterChain.doFilter(servletRequest,servletResponse);
     }
 

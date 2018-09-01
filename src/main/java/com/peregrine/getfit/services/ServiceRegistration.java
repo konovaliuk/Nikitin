@@ -5,7 +5,9 @@ import com.peregrine.getfit.dao.AbstractDAOFactory;
 import com.peregrine.getfit.entities.User;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
+/**
+ * Сервис для регистрации пользователя
+ * */
 public class ServiceRegistration {
     private static final Logger logger = LogManager.getLogger(Registration.class);
 

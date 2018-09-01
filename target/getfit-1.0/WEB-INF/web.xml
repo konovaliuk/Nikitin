@@ -50,10 +50,23 @@
         <filter-name>LoginFilter</filter-name>
         <filter-class>com.peregrine.getfit.filter.LoginFilter</filter-class>
     </filter>
+
     <filter-mapping>
         <filter-name>LoginFilter</filter-name>
         <servlet-name>Controller</servlet-name>
         <!--<url-pattern>/account.jsp</url-pattern>-->
+    </filter-mapping>
+
+    <filter>
+        <filter-name>NoCacheFilter</filter-name>
+        <filter-class>com.peregrine.getfit.filter.NoCacheFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>NoCacheFilter</filter-name>
+        <url-pattern>/login</url-pattern>
+        <url-pattern>/account</url-pattern>
+        <url-pattern>/registration</url-pattern>
     </filter-mapping>
 
     <jsp-config>
@@ -61,6 +74,13 @@
             <taglib-uri>com.peregrine.getfit</taglib-uri>
             <taglib-location>/WEB-INF/dateformatter.tld</taglib-location>
         </taglib>
+        <jsp-property-group>
+            <url-pattern>*.jsp</url-pattern>
+            <page-encoding>UTF-8</page-encoding>
+        </jsp-property-group>
     </jsp-config>
+    <session-config>
+        <session-timeout>1</session-timeout>
+    </session-config>
 </web-app>
 

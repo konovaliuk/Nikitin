@@ -138,6 +138,7 @@ public class DAOFood implements  IDAOFood {
                 ResultSet resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
                     Food food = new Food();
+                    food.setFoodId(resultSet.getInt("food_id"));
                     food.setName(resultSet.getString("name"));
                     food.setFat(resultSet.getDouble("fat"));
                     food.setProtein(resultSet.getDouble("protein"));

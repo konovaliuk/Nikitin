@@ -48,13 +48,14 @@ public class DAOUser implements IDAOUser {
         return succsessValue;
     }
 
-    public User findUserById(Integer id) {
-        String sqlQuery = "Select * from user where user_id = ?";
+    @Override
+    public User findUserByEmail(String email) {
+        String sqlQuery = "Select * from user where email = ?";
         User user = new User();
         try (Connection connection = DataSourceManager.data().getConnection()) {
             connection.setAutoCommit(false);
             try ( PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-                statement.setInt(1,id);
+                statement.setString(1,email);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
                     user.setId(resultSet.getInt("user_id"));
@@ -62,11 +63,11 @@ public class DAOUser implements IDAOUser {
                     user.setLastName(resultSet.getString("last_name"));
                     user.setEmail(resultSet.getString("email"));
                     user.setPassword(resultSet.getString("password"));
-                    user.setGender(resultSet.getString("gender"));
+                    user.setGender(resultSet.getString("gender").toLowerCase());
                     user.setAge(resultSet.getInt("age"));
                     user.setWeight(resultSet.getDouble("weight"));
                     user.setHeight(resultSet.getDouble("height"));
-                    user.setLifestyle(resultSet.getString("lifestyle"));
+                    user.setLifestyle(resultSet.getString("lifestyle").toLowerCase());
                 }
             } catch (SQLException e) {
                 connection.rollback();
@@ -75,7 +76,7 @@ public class DAOUser implements IDAOUser {
             }
             connection.commit();
             connection.setAutoCommit(true);
-            logger.debug("user was found by id " + id);
+            logger.debug("user was found by email " + email);
         } catch (SQLException e) {
             logger.error("error occurred while connecting to a database" + e.getMessage());
         }
@@ -92,6 +93,7 @@ public class DAOUser implements IDAOUser {
                 ResultSet resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
                     User user = new User();
+                    user.setId(resultSet.getInt("user_id"));
                     user.setFirstName(resultSet.getString("first_name"));
                     user.setLastName(resultSet.getString("last_name"));
                     user.setEmail(resultSet.getString("email"));

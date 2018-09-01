@@ -1,14 +1,16 @@
 package com.peregrine.getfit.dao;
 
-
+/**
+ * Фабричный класс порождающий соответсвующие DAO классы
+ */
 public class MySqlDAOFactory extends AbstractDAOFactory {
-    public DAOUser getUserDAO() {
+    public IDAOUser getUserDAO() {
         return new DAOUser();
     }
-    public DAOFood getFoodDAO() {
+    public IDAOFood getFoodDAO() {
         return new DAOFood();
     }
-    public DAOConsumption getConsumptionDAO() {
+    public IDAOConsumption getConsumptionDAO() {
         return new DAOConsumption();
     }
 }

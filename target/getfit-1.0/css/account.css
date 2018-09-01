@@ -3,11 +3,11 @@
 
 @font-face {
     font-family: Poppins-Regular;
-    src: url('../fonts/poppins/Poppins-Regular.ttf');
+    src: url('../fonts/poppings/Poppins-Regular.ttf');
 }
 @font-face {
     font-family: Poppins-Bold;
-    src: url('../fonts/poppins/Poppins-Bold.ttf');
+    src: url('../fonts/poppings/Poppins-Bold.ttf');
 }
 /*//////////////////////////////////////////////////////////////////
 [ RESTYLE TAG ]*/
@@ -106,7 +106,8 @@ iframe {
     display: inline-block;
 }
 
-.dropdown-content {
+.dropdown-content,
+.dropdown-content1 {
     display: none;
     position: absolute;
     background-color: #f1f1f1;
@@ -116,7 +117,8 @@ iframe {
     z-index: 1;
 }
 
-.dropdown-content a {
+.dropdown-content a,
+.dropdown-content1 a {
     color: black;
     padding: 12px 16px;
     text-decoration: none;
@@ -128,8 +130,9 @@ iframe {
 .show {display: block;}
 
 .options {
-    margin: auto 550px;
+    margin: auto;
     display: inline;
+    padding: 10px;
 }
 
 .today {
@@ -223,7 +226,7 @@ iframe {
     color: #aaaaaa;
     width: 55%;
     margin: 0 auto;
-    padding: 10px;
+    padding: 10px 0 10px 10px;
     border-radius: 0.3em 0.3em 0 0;
     box-shadow: 0px 0px 31px 3px rgba(0,0,0,.45);
 
@@ -327,7 +330,7 @@ iframe {
     color: #aaaaaa;
     font-size: 28px;
     font-weight: bold;
-    margin-left: 610px;
+    margin-left: 580px;
 }
 .close-modal:hover,
 .close-modal:focus {
@@ -338,13 +341,12 @@ iframe {
 
 .container-search input#search{
     width: 190px;
-    height: 35px;
+    height: 10px;
     background: #5e7cbc;
     border: none;
     font-size: 10pt;
     float: left;
     color: #fff;
-    margin-top: 7px;
     padding-left: 15px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
@@ -460,16 +462,9 @@ iframe {
     width: 190px;
 }
 
-
 .table, .row {
     width: 100% !important;
 }
-
-.row:hover {
-    background-color: #ececff;
-    cursor: pointer;
-}
-
 @media (max-width: 768px) {
     .row {
         border-bottom: 1px solid #f2f2f2;
@@ -501,3 +496,4 @@ iframe {
         width: 100% !important;
     }
 }
+

@@ -1,12 +1,14 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Peregrine
-  Date: 30.07.2018
-  Time: 00:05
-  To change this template use File | Settings | File Templates.
---%>
-<html>
+<!DOCTYPE HTML>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri = "http://java.sun.com/jsp/jstl/core" prefix = "c"%>
+<%@ taglib prefix = "fmt" uri = "http://java.sun.com/jsp/jstl/fmt" %>
+
+<c:set var="language" value="${not empty param.language ? param.language : not empty language ? language : pageContext.request.locale}" scope="session" />
+<fmt:setLocale value="${language}" />
+<fmt:setBundle basename="locale" var="loc"/>
+<html lang="${language}">
 <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Registration</title>
     <style><%@include file="../css/register.css"%></style>
     <link href="//netdna.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
@@ -19,75 +21,79 @@
 <body>
 <div class="container">
     <form class="form-horizontal" role="form" action="account" method="post">
-        <h2>Registration</h2>
+        <h2><fmt:message key="REGISTRATION" bundle="${loc}"/></h2>
         <div class="form-group">
-            <label for="firstName" class="col-sm-3 control-label">First Name*</label>
+            <label for="firstName" class="col-sm-3 control-label"><fmt:message key="FIRST_NAME" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
-                <input type="text" id="firstName" name="firstname" placeholder="First Name" class="form-control" autofocus>
+                <input type="text" id="firstName" name="firstname" placeholder="<fmt:message key="FIRST_NAME" bundle="${loc}"/>" class="form-control" autofocus>
             </div>
         </div>
         <div class="form-group">
-            <label for="lastName" class="col-sm-3 control-label">Last Name*</label>
+            <label for="lastName" class="col-sm-3 control-label"><fmt:message key="LAST_NAME" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
-                <input type="text" id="lastName" name="lastname" placeholder="Last Name" class="form-control" autofocus>
+                <input type="text" id="lastName" name="lastname" placeholder="<fmt:message key="LAST_NAME" bundle="${loc}"/>" class="form-control" autofocus>
             </div>
         </div>
         <div class="form-group">
-            <label for="email" class="col-sm-3 control-label">Email*</label>
+            <label for="email" class="col-sm-3 control-label"><fmt:message key="EMAIL" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
                 <input type="email" id="email" name="email" placeholder="Email" class="form-control" name= "email">
             </div>
         </div>
         <div class="form-group">
-            <label for="password" class="col-sm-3 control-label">Password*</label>
+            <label for="password" class="col-sm-3 control-label"><fmt:message key="PASSWORD" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
-                <input type="password" id="password" name="password" placeholder="Password" class="form-control">
+                <input type="password" id="password" name="password" placeholder="<fmt:message key="PASSWORD" bundle="${loc}"/>" class="form-control">
             </div>
         </div>
 
         <div class="form-group">
-            <label for="age" class="col-sm-3 control-label">Age*</label>
+            <label for="age" class="col-sm-3 control-label"><fmt:message key="AGE" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
-                <input type="text" id="age" name="age" class="form-control" placeholder="Age">
+                <input type="text" id="age" name="age" class="form-control" placeholder="<fmt:message key="AGE" bundle="${loc}"/>">
             </div>
         </div>
         <div class="form-group">
-            <label for="Height" class="col-sm-3 control-label">Height* </label>
+            <label for="Height" class="col-sm-3 control-label"><fmt:message key="HEIGHT" bundle="${loc}"/>* </label>
             <div class="col-sm-9">
-                <input type="number" id="height" name="height" placeholder="Please write your height in centimetres" class="form-control">
+                <input type="number" id="height" name="height" placeholder="<fmt:message key="HEIGHT.placeholder" bundle="${loc}"/>" class="form-control">
             </div>
         </div>
         <div class="form-group">
-            <label for="weight" class="col-sm-3 control-label">Weight*</label>
+            <label for="weight" class="col-sm-3 control-label"><fmt:message key="WEIGHT" bundle="${loc}"/>*</label>
             <div class="col-sm-9">
-                <input type="number" id="weight" name="weight" placeholder="Please write your weight in kilograms" class="form-control">
+                <input type="number" id="weight" name="weight" placeholder="<fmt:message key="WEIGHT.placeholder" bundle="${loc}"/>" class="form-control">
             </div>
         </div>
         <div class="form-group">
-            <label class="control-label col-sm-3">Gender*</label>
+            <label class="control-label col-sm-3"><fmt:message key="GENDER" bundle="${loc}"/>*</label>
             <div class="col-sm-6">
                 <div class="row">
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input type="radio" id="femaleRadio" name="gender" value="Female">Female
+                            <input type="radio" id="femaleRadio" name="gender" value="Female"><fmt:message key="MALE" bundle="${loc}"/>
                         </label>
                     </div>
                     <div class="col-sm-4">
                         <label class="radio-inline">
-                            <input type="radio" id="maleRadio" name="gender" value="Male">Male
+                            <input type="radio" id="maleRadio" name="gender" value="Male"><fmt:message key="FEMALE" bundle="${loc}"/>
                         </label>
                     </div>
                 </div>
             </div>
         </div>
         <div class="form-group">
-            <label for="weight" class="col-sm-3 control-label">Lifestyle* </label>
+            <label for="weight" class="col-sm-3 control-label"><fmt:message key="LIFESTYLE" bundle="${loc}"/>*</label>
             <div class="col-sm-6">
                 <div class="custom-select" style="width:200px;">
                     <select name = "lifestyle">
-                        <option value="0">Select lifestyle:</option>
-                        <option value ="lazy">Lazy</option>
-                        <option value ="active">Active</option>
+                        <option value="0"><fmt:message key="LIFESTYLE.select" bundle="${loc}"/></option>
+                        <option value ="minimum"><fmt:message key="LIFESTYLE.minimum" bundle="${loc}"/></option>
+                        <option value ="low"><fmt:message key="LIFESTYLE.low" bundle="${loc}"/></option>
+                        <option value ="medium"><fmt:message key="LIFESTYLE.medium" bundle="${loc}"/></option>
+                        <option value ="high"><fmt:message key="LIFESTYLE.high" bundle="${loc}"/></option>
+                        <option value ="extra"><fmt:message key="LIFESTYLE.extra" bundle="${loc}"/></option>
+
                     </select>
                 </div>
             </div>
@@ -95,14 +101,14 @@
         <!-- /.form-group -->
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <span class="help-block">*Required fields</span>
+                <span class="help-block">*<fmt:message key="REQUIRED" bundle="${loc}"/></span>
             </div>
         </div>
-        <button type="submit" class="btn btn-primary btn-block">Register</button>
+        <button type="submit" class="btn btn-primary btn-block"><fmt:message key="REGISTER" bundle="${loc}"/></button>
         <input type="hidden" name="command" value="register">
         <div class="form-group">
             <div class="col-sm-9 col-sm-offset-3">
-                <span class="help-block">Already have an account? <a href = "login?command=goToPage&url=WEB-INF%2Flogin.jsp">Log in!</a></span>
+                <span class="help-block"><fmt:message key="HAS_ACCOUNT" bundle="${loc}"/>?<a href = "login?command=goToPage&url=WEB-INF%2Flogin.jsp"><fmt:message key="LOGIN" bundle="${loc}"/>Log in!</a></span>
             </div>
         </div>
     </form> <!-- /form -->

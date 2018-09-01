@@ -1,32 +1,32 @@
 package com.peregrine.getfit.entities;
 
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.Objects;
 
 public class Consumption implements Serializable {
     private Integer consumptionId;
-    private Date time;
+    private LocalDate date;
     private Integer amount;
-    private Integer userId;
-    private Integer foodId;
+    private User user;
+    private Food food;
 
     public Consumption() {}
 
-    public Integer getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(Integer userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 
-    public Integer getFoodId() {
-        return foodId;
+    public Food getFood() {
+        return food;
     }
 
-    public void setFoodId(Integer foodId) {
-        this.foodId = foodId;
+    public void setFood(Food food) {
+        this.food = food;
     }
 
     public Integer getConsumptionId() {
@@ -37,12 +37,12 @@ public class Consumption implements Serializable {
         this.consumptionId = consumptionId;
     }
 
-    public Date getTime() {
-        return time;
+    public LocalDate getDate() {
+        return date;
     }
 
-    public void setTime(Date time) {
-        this.time = time;
+    public void setDate(LocalDate date) {
+        this.date = date;
     }
 
     public Integer getAmount() {
@@ -59,25 +59,25 @@ public class Consumption implements Serializable {
         if (o == null || getClass() != o.getClass()) return false;
         Consumption consumption = (Consumption) o;
         return Objects.equals(consumptionId, consumption.consumptionId) &&
-                Objects.equals(time, consumption.time) &&
+                Objects.equals(date, consumption.date) &&
                 Objects.equals(amount, consumption.amount) &&
-                Objects.equals(userId, consumption.userId) &&
-                Objects.equals(foodId, consumption.foodId);
+                Objects.equals(user, consumption.user) &&
+                Objects.equals(food, consumption.food);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(consumptionId, time, amount, userId, foodId);
+        return Objects.hash(consumptionId, date, amount, user, food);
     }
 
     @Override
     public String toString() {
         return "Consumption(" +
                 "consumptionId=" + consumptionId +
-                ", time=" + time +
+                ", time=" + date +
                 ", amount=" + amount +
-                ", user=" + userId +
-                ", food=" + foodId +
+                ", user=" + user +
+                ", food=" + food +
                 ')';
     }
 }

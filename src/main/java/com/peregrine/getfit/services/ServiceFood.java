@@ -7,15 +7,28 @@ import org.apache.log4j.Logger;
 
 import java.util.ArrayList;
 
+/**
+ * Сервис для работы с DAOFood
+ */
 public class ServiceFood {
     private static final Logger logger = LogManager.getLogger(ServiceFood.class);
 
+    /**
+     * Получить спсок продуктов
+     * @return список продуктов
+     */
     public static ArrayList<Food> getFoodList() {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         ArrayList<Food> foodList = factory.getFoodDAO().findAll();
         logger.info("getFoodList()");
         return foodList;
     }
+
+    /**
+     * Добавить продукт в базу
+     * @param food продукт
+     * @return true если success больше 0
+     */
     public static boolean addFood(Food food) {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         int success = factory.getFoodDAO().create(food);

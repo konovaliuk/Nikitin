@@ -9,8 +9,6 @@ public class GoToPage implements IRequestHandler {
 
     @Override
     public String execute(HttpServletRequest request, HttpServletResponse response) {
-        //TODO:
-        String page = request.getParameter("url");
-        return page;
+        return request.getParameter("url");
     }
 }

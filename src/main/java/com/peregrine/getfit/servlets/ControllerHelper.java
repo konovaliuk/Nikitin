@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 
 
+/**
+ * Singleton Класс для хранения комманд
+ */
 public class ControllerHelper {
     private static Logger logger = LogManager.getLogger(ControllerHelper.class.getName());
 
@@ -21,11 +24,17 @@ public class ControllerHelper {
         commands.put("goToPage",new GoToPage());
         commands.put("logout", new Logout());
         commands.put("loadFoodList", new FoodLoader());
-        commands.put("addfood", new CreateFood());
+        commands.put("addFood", new CreateFood());
         commands.put("createConsumption", new CreateConsumption());
+        commands.put("loadConsumptionList", new ConsumptionLoader());
         commands.put("calculateCalories", new CaloriesCalculator());
     }
 
+    /**
+     * Получить комманду
+     * @param request HttpServletRequest request
+     * @return экземпляр комманды
+     */
     public IRequestHandler getCommand(HttpServletRequest request) {
         IRequestHandler command = commands.get(request.getParameter("command"));
         logger.info("command = " + request.getParameter("command"));

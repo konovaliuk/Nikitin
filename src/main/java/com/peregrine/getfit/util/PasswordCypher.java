@@ -7,6 +7,9 @@ import java.security.NoSuchAlgorithmException;
 import java.security.SecureRandom;
 import java.security.spec.InvalidKeySpecException;
 
+/**
+ * Класс хранящий методы для шифрования паролей
+ */
 public class PasswordCypher {
 
     @SuppressWarnings("serial")
@@ -27,13 +30,10 @@ public class PasswordCypher {
     }
 
     public static final String PBKDF2_ALGORITHM = "PBKDF2WithHmacSHA1";
-
-    // These constants may be changed without breaking existing hashes.
     public static final int SALT_SIZE = 24;
     public static final int HASH_SIZE = 18;
     public static final int PBKDF2_ITERATIONS = 64000;
 
-    // These constants define the encoding and may not be changed.
     public static final int HASH_SECTIONS = 5;
     public static final int HASH_ALGORITHM_INDEX = 0;
     public static final int ITERATION_INDEX = 1;
@@ -49,8 +49,13 @@ public class PasswordCypher {
         return verifyPassword(password.toCharArray(), correctHash);
     }
 
+    /**
+     * Метод для шифрования пароля
+     * @param password char массив. Строка ввода разбивается на символы
+     * @return строку состоящую из частей: соль + размер хэша + зашифрованную соль + зашифрованный хэш
+     * @throws CannotPerformOperationException
+     */
     private static String hashGenerator(char[] password) throws CannotPerformOperationException {
-        // Generate a random salt
         SecureRandom random = new SecureRandom();
         byte[] salt = new byte[SALT_SIZE];
         random.nextBytes(salt);
@@ -64,8 +69,15 @@ public class PasswordCypher {
         return parts;
     }
 
+    /**
+     * Проверка пароля на подлинность
+     * @param password введенный пароль
+     * @param correctHash пароль в базе
+     * @return результат сравнения
+     * @throws CannotPerformOperationException
+     * @throws InvalidHashException
+     */
     private static boolean verifyPassword(char[] password, String correctHash) throws CannotPerformOperationException, InvalidHashException {
-        // Decode the hash into its parameters
         String[] params = correctHash.split(":");
         int iterations = Integer.parseInt(params[ITERATION_INDEX]);
         int storedHashSize = Integer.parseInt(params[HASH_SIZE_INDEX]);
@@ -75,7 +87,6 @@ public class PasswordCypher {
         if (params.length != HASH_SECTIONS) {
             throw new InvalidHashException("Fields are missing from the password hash.");
         }
-        // Currently, Java only supports SHA1.
         if (!params[HASH_ALGORITHM_INDEX].equals("sha1")) {
             throw new CannotPerformOperationException("Unsupported hash type.");
         }
@@ -94,7 +105,12 @@ public class PasswordCypher {
         // both hashes match.
         return slowEquals(hash, testHash);
     }
-
+    /**
+     * Медленно сравнение двух паролей с помащью xor
+     * @param a первый пароль
+     * @param b второй пароль
+     * @return true если равны
+     */
     private static boolean slowEquals(byte[] a, byte[] b) {
         int diff = a.length ^ b.length;
         for(int i = 0; i < a.length && i < b.length; i++)
@@ -105,7 +121,7 @@ public class PasswordCypher {
     private static byte[] pbkdf2(char[] password, byte[] salt, int iterations, int bytes) throws CannotPerformOperationException {
         try {
             PBEKeySpec spec = new PBEKeySpec(password, salt, iterations, bytes * 8); //PBKDF2 использует псевдослучайную функцию для получения ключей.
-            // `Присоединяем соль к паролю и вычисляем хеш-код с помощью стандартной криптографической хеш-функции, например, SHA256;
+            // Присоединяем соль к паролю и вычисляем хеш-код с помощью стандартной криптографической хеш-функции - SHA256;
             SecretKeyFactory skf = SecretKeyFactory.getInstance(PBKDF2_ALGORITHM);
             return skf.generateSecret(spec).getEncoded();
         }

@@ -9,6 +9,9 @@ import javax.naming.NamingException;
 import javax.sql.DataSource;
 
 
+/**
+ * Класс обвертка для Connection pool'a
+ */
 public class DataSourceManager {
     private static Logger logger = LogManager.getLogger(MySqlDAOFactory.class.getName());
 

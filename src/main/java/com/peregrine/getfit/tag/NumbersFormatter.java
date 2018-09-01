@@ -11,8 +11,7 @@ public class NumbersFormatter extends SimpleTagSupport {
     private String format;
     private String number;
 
-    public NumbersFormatter() {
-    }
+    public NumbersFormatter() { }
 
     public void setFormat(String format) {
         this.format = format;
@@ -32,8 +31,7 @@ public class NumbersFormatter extends SimpleTagSupport {
         } catch (Exception e) {
             e.printStackTrace();
             // stop page from loading further by throwing SkipPageException
-            throw new SkipPageException("Exception in formatting " + number
-                    + " with format " + format);
+            throw new SkipPageException("Exception in formatting " + number + " with format " + format);
         }
     }
 

@@ -9,7 +9,9 @@ import javax.servlet.http.HttpSessionAttributeListener;
 import javax.servlet.http.HttpSessionEvent;
 import javax.servlet.http.HttpSessionListener;
 import javax.servlet.http.HttpSessionBindingEvent;
-
+/**
+ * Listener для логирования событий создания сессий и сервлетного контекста
+ * */
 public class LoggerListener implements ServletContextListener, HttpSessionListener, HttpSessionAttributeListener {
 
     private static final Logger logger = LogManager.getLogger(LoggerListener.class);
@@ -21,7 +23,7 @@ public class LoggerListener implements ServletContextListener, HttpSessionListen
          initialized(when the Web application is deployed). 
          You can initialize servlet context related data here.
       */
-        logger.info("Servlet context is initialized - " + sce.getServletContext().getContextPath());
+        logger.info("Servlet context is initialized - " + sce);
     }
 
     public void contextDestroyed(ServletContextEvent sce) {

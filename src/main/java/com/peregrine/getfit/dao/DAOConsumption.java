@@ -1,29 +1,28 @@
 package com.peregrine.getfit.dao;
 
 import com.peregrine.getfit.entities.Consumption;
+import com.peregrine.getfit.entities.Food;
+import com.peregrine.getfit.entities.User;
 import com.peregrine.getfit.util.DataSourceManager;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Date;
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
-
-
 
 public class DAOConsumption implements IDAOConsumption {
     private static Logger logger = LogManager.getLogger(DAOConsumption.class.getName());
     @Override
     public int createConsumption(Consumption consumption) {
-        String sqlQuery = "insert into consumption(time, amount, user_user_id, food_food_id) values(?,?,?,?)";
+        String sqlQuery = "insert into consumption(date, amount, user_user_id, food_food_id) values(?,?,?,?)";
         int succsessValue = 0;
         try(Connection connection = DataSourceManager.data().getConnection()) {
             connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
-                statement.setTime(1, (Time) consumption.getTime());
+                statement.setTimestamp(1, Timestamp.valueOf(consumption.getDate().atStartOfDay()));
                 statement.setInt(2,consumption.getAmount());
-                statement.setInt(3,consumption.getUserId());
-                statement.setInt(4,consumption.getFoodId());
+                statement.setInt(3,consumption.getUser().getId());
+                statement.setInt(4,consumption.getFood().getFoodId());
                 succsessValue = statement.executeUpdate();
             } catch (SQLException e) {
                 connection.rollback();
@@ -32,8 +31,8 @@ public class DAOConsumption implements IDAOConsumption {
             }
             connection.commit();
             connection.setAutoCommit(true);
-            logger.info("consumption " + consumption.getConsumptionId() + " : userId = " + consumption.getUserId() +
-                    "; foodId" + consumption.getFoodId() + " has been created");
+            logger.info("consumption for : userId = " + consumption.getUser().getId() +
+                    "; and foodId = " + consumption.getFood().getFoodId() + " has been created");
         } catch (SQLException e) {
             logger.error("error occurred while connecting to a database" + e.getMessage());
         }
@@ -42,14 +41,14 @@ public class DAOConsumption implements IDAOConsumption {
 
     @Override
     public void update(Consumption consumption) {
-        String sqlQuery = "update consumption Set time = ?, amount = ?, user_user_id = ?, food_food_id = ? where consumption_id = ?";
+        String sqlQuery = "update consumption Set date = ?, amount = ?, user_user_id = ?, food_food_id = ? where consumption_id = ?";
         try(Connection connection = DataSourceManager.data().getConnection()) {
            connection.setAutoCommit(false);
             try (PreparedStatement statement = connection.prepareStatement(sqlQuery)){
                 statement.setDate(1,null);
                 statement.setInt(2,consumption.getAmount());
-                statement.setInt(3,consumption.getUserId());
-                statement.setInt(4,consumption.getFoodId());
+                statement.setInt(3,consumption.getUser().getId());
+                statement.setInt(4,consumption.getFood().getFoodId());
                 statement.setInt(5,consumption.getConsumptionId());
                 statement.executeUpdate();
             } catch (SQLException e) {
@@ -93,21 +92,41 @@ public class DAOConsumption implements IDAOConsumption {
 
     @Override
     public ArrayList<Consumption> findAll() {
-        DAOFood food = new DAOFood();
-        DAOUser user = new DAOUser();
         ArrayList<Consumption> consumptionList = new ArrayList<>();
-        String sqlQuery = "select * from consumption";
+        String sqlQuery = "select consumption.*, food.*, user.* from consumption,food,user " +
+                "where food_food_id = food_id and user_user_id = user_id";
         try(Connection connection = DataSourceManager.data().getConnection()) {
             connection.setAutoCommit(false);
-
             try (PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
                 ResultSet resultSet = statement.executeQuery(sqlQuery);
                 while (resultSet.next()) {
+                    User user = new User();
+                    Food food = new Food();
+
+                    user.setId(resultSet.getInt("user_id"));
+                    user.setFirstName(resultSet.getString("first_name"));
+                    user.setLastName(resultSet.getString("last_name"));
+                    user.setEmail(resultSet.getString("email"));
+                    user.setPassword(resultSet.getString("password"));
+                    user.setGender(resultSet.getString("gender").toLowerCase());
+                    user.setAge(resultSet.getInt("age"));
+                    user.setWeight(resultSet.getDouble("weight"));
+                    user.setHeight(resultSet.getDouble("height"));
+                    user.setLifestyle(resultSet.getString("lifestyle").toLowerCase());
+
+                    food.setFoodId(resultSet.getInt("food_id"));
+                    food.setName(resultSet.getString("name"));
+                    food.setFat(resultSet.getDouble("fat"));
+                    food.setProtein(resultSet.getDouble("protein"));
+                    food.setCarb(resultSet.getDouble("carb"));
+                    food.setCalories(resultSet.getDouble("calories"));
+
                     Consumption consumption = new Consumption();
-                    consumption.setTime(new Date());
+                    consumption.setConsumptionId(resultSet.getInt("consumption_id"));
+                    consumption.setDate(resultSet.getTimestamp("date").toLocalDateTime().toLocalDate());
                     consumption.setAmount(resultSet.getInt("amount"));
-                    consumption.setUserId(resultSet.getInt("user_user_id"));
-                    consumption.setFoodId(resultSet.getInt("food_food_id"));
+                    consumption.setUser(user);
+                    consumption.setFood(food);
                     consumptionList.add(consumption);
                 }
             } catch (SQLException e) {

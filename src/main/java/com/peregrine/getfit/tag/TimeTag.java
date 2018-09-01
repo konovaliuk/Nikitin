@@ -6,6 +6,10 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+
+/**
+ * Пользовательский тэг для форматирования даты времени
+ */
 public class TimeTag extends SimpleTagSupport {
     private String mFormat;
 

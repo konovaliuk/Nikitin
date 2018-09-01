@@ -2,6 +2,9 @@ package com.peregrine.getfit.util;
 
 import java.util.ResourceBundle;
 
+/**
+ * Singleton класс для укзания страниц из файла pages.properties
+ */
 public class Pages {
     private static Pages instance;
     private ResourceBundle resource;
@@ -11,7 +14,6 @@ public class Pages {
     public static final String REGISTER = "REGISTER";
     public static final String LOGIN = "LOGIN";
     public static final String ACCOUNT = "ACCOUNT";
-    public static final String AJAX = "AJAX";
     public static final String CUSTOM = "CUSTOM";
 
     public static Pages getInstance() {

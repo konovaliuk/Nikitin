@@ -22,11 +22,7 @@ public class CreateFood implements IRequestHandler {
         food.setCarb(Double.parseDouble(request.getParameter("carb")));
         food.setCalories(Double.parseDouble(request.getParameter("calories")));
 
-        logger.debug(request.getParameter("name") +
-                " fat =  "+ request.getParameter("fat") +
-                " protein = " + request.getParameter("protein") +
-                " carb = " + request.getParameter("carb") +
-                " calories = " + request.getParameter("calories"));
+        logger.debug(food);
 
         ServiceFood.addFood(food);
         logger.debug("CreateFood execute");
