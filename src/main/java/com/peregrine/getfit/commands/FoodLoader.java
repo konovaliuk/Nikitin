@@ -1,6 +1,5 @@
 package com.peregrine.getfit.commands;
 
-import com.google.gson.Gson;
 import com.peregrine.getfit.entities.Food;
 import com.peregrine.getfit.services.ServiceFood;
 import com.peregrine.getfit.util.IRequestHandler;

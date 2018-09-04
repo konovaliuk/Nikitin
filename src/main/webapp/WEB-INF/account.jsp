@@ -99,12 +99,12 @@
                                     <cons>
                                         <table class="prettyTable" style="width: 100%;">
                                             <tr>
-                                                <td>Item</td>
-                                                <td>Amount</td>
-                                                <td>Fat</td>
-                                                <td>Protein</td>
-                                                <td>Carb</td>
-                                                <td>Calories</td>
+                                                <td><fmt:message key="FOOD_NAME" bundle="${loc}"/></td>
+                                                <td><fmt:message key="CONSUMPTION_AMOUNT" bundle="${loc}"/></td>
+                                                <td><fmt:message key="FOOD_FAT" bundle="${loc}"/></td>
+                                                <td><fmt:message key="FOOD_PROTEIN" bundle="${loc}"/></td>
+                                                <td><fmt:message key="FOOD_CARB" bundle="${loc}"/></td>
+                                                <td><fmt:message key="FOOD_CALORIES" bundle="${loc}"/></td>
                                             </tr>
                                             <c:forEach items="${consumptions}" var="item">
                                                 <tr>
@@ -131,7 +131,7 @@
         <div id="modal-content" class="modal">
             <!-- Modal content -->
             <div class="modal-food-header">
-                Add food to diary
+                <fmt:message key="ADD_FOODS_DIARY" bundle="${loc}"/>
                 <span class="close-modal">&times;</span>
             </div>
             <div class="modal-content">
@@ -146,11 +146,11 @@
                                 <table id="foodTable" class="table table-striped table-bordered" onclick="selectRow()">
                                     <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Fat</th>
-                                        <th>Protein</th>
-                                        <th>Carb</th>
-                                        <th>Calories</th>
+                                        <th><fmt:message key="FOOD_NAME" bundle="${loc}"/></th>
+                                        <th><fmt:message key="FOOD_FAT" bundle="${loc}"/></th>
+                                        <th><fmt:message key="FOOD_PROTEIN" bundle="${loc}"/></th>
+                                        <th><fmt:message key="FOOD_CARB" bundle="${loc}"/></th>
+                                        <th><fmt:message key="FOOD_CALORIES" bundle="${loc}"/></th>
                                         <th style="display: none">Id</th>
                                     </tr>
                                     </thead>
@@ -178,13 +178,13 @@
                                 <button class="modal-prev-btn">&lt;</button>
                                 <button class="modal-next-btn">&gt;</button>
                             </div>
-                            <div><p>You chose</p></div>
+                            <div><p><fmt:message key="YOU_CHOSE" bundle="${loc}"/></p></div>
                             <div><input type="text" id="product" name="product" readonly></div>
                             <div><input type="hidden" id="productId" name="productId"></div>
-                            <div><label for="amount"><b>Enter quantity</b></label></div>
+                            <div><label for="amount"><b><fmt:message key="QUANTITY" bundle="${loc}"/></b></label></div>
                             <div><input type="text" id="amount" placeholder="Enter quantity" name="amount" required></div>
                             <div>
-                                <button id = "consumption-add" class="modal-addFood">Add</button>
+                                <button id = "consumption-add" class="modal-addFood"><fmt:message key="ADD_BUTTON" bundle="${loc}"/></button>
                                 <input type="hidden" name="command" value="createConsumption">
                             </div>
                         </div>

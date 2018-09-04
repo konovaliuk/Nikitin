@@ -12,7 +12,7 @@ import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class CreateConsumption implements IRequestHandler {
     private static Logger logger = LogManager.getLogger(CreateConsumption.class);
@@ -23,7 +23,7 @@ public class CreateConsumption implements IRequestHandler {
         User currentUser = (User) request.getSession().getAttribute("user");
         logger.debug(currentUser);
         Consumption consumption = new Consumption();
-        consumption.setDate(LocalDate.now());
+        consumption.setDate(LocalDateTime.now());
         consumption.setAmount(Integer.parseInt(request.getParameter("amount")));
         consumption.setFood(chosenFood);
         consumption.setUser(currentUser);

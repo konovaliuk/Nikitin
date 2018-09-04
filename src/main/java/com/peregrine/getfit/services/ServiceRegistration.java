@@ -11,8 +11,11 @@ import org.apache.log4j.Logger;
 public class ServiceRegistration {
     private static final Logger logger = LogManager.getLogger(Registration.class);
 
+    /**
+     * Зарегестрировать пользователя
+     * @param user - пользователь под регистрацию
+     * */
     public static void registerUser(User user) {
-
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         int success = factory.getUserDAO().createUser(user);
         logger.debug("success = " + success);

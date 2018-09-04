@@ -1,12 +1,12 @@
 package com.peregrine.getfit.entities;
 
 import java.io.Serializable;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class Consumption implements Serializable {
     private Integer consumptionId;
-    private LocalDate date;
+    private LocalDateTime date;
     private Integer amount;
     private User user;
     private Food food;
@@ -37,11 +37,11 @@ public class Consumption implements Serializable {
         this.consumptionId = consumptionId;
     }
 
-    public LocalDate getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 

@@ -22,13 +22,14 @@ public class ServiceLogin {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         User user = factory.getUserDAO().findUserByEmail(email);
         try {
-            if(PasswordCypher.verifyPassword(password,user.getPassword())) {
-                return user;
+            if (user == null || !PasswordCypher.verifyPassword(password, user.getPassword())) {
+                return null;
             }
+            return user;
         }
         catch (PasswordCypher.InvalidHashException | PasswordCypher.CannotPerformOperationException e) {
             logger.error("error = " + e.getMessage());
+            return null;
         }
-        return null;
     }
 }

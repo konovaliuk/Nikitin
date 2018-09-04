@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Интерфейс описывающий CRUD методы для классов DAOConsumption.
  */
 public interface IDAOConsumption {
-    int createConsumption(Consumption consumption);
+    boolean createConsumption(Consumption consumption);
     void update(Consumption consumption);
     boolean delete(Consumption consumption);
     ArrayList<Consumption> findAll();

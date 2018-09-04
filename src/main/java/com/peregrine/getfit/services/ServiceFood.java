@@ -35,6 +35,7 @@ public class ServiceFood {
         logger.info("addFood() = " + success);
         return success > 0;
     }
+
     public static Food findFoodById(Integer id) {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         Food food = factory.getFoodDAO().findFoodById(id);

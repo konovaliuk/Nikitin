@@ -12,9 +12,6 @@ public class Message {
     public static final String SERVLET_EXECPTION = "SERVLET_EXCEPTION";
     public static final String IO_EXCEPTION = "IO_EXCEPTION";
     public static final String LOGIN_ERROR = "LOGIN_ERROR";
-//    public static final String NORM = "NORM";
-//    public static final String OVER = "OVER";
-//    public static final String LOWER = "LOWER";
 
 
     public static Message getInstance() {

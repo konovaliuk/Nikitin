@@ -7,6 +7,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -14,7 +15,6 @@ import java.util.ArrayList;
  */
 public class ServiceConsumption {
     private static final Logger logger = LogManager.getLogger(ServiceConsumption.class);
-
     /**
      * Создать потребление
      * @param consumption потребление
@@ -22,29 +22,22 @@ public class ServiceConsumption {
      */
     public static boolean createConsumption(Consumption consumption) {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
-        int success = factory.getConsumptionDAO().createConsumption(consumption);
-        logger.info("createConsumption() = " + success);
-        return success > 0;
+        factory.getConsumptionDAO().createConsumption(consumption);
+        logger.info("createConsumption() = ");
+        return true;
     }
 
     /**
-     * Получить список потреблений
+     * Получить список потреблений для конкретного пользователя
      * @return список потреблений
-     * */
-    public static ArrayList<Consumption> getConsumptionList() {
-        AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
-        ArrayList<Consumption> consumptionList = factory.getConsumptionDAO().findAll();
-        logger.info("getConsumptionList()");
-        return consumptionList;
-    }
-
+     */
     public static ArrayList<Consumption> getConsumptionsForCurrentUser (User user) {
         AbstractDAOFactory factory = AbstractDAOFactory.getDAOFactory("MySql");
         ArrayList<Consumption> consumptionList = factory.getConsumptionDAO().findAll();
         ArrayList<Consumption> wrongCunsumptions = new ArrayList<>();
-        for (Consumption item : consumptionList) {
-            if(item.getDate().isBefore(LocalDate.now()) || !item.getUser().getId().equals(user.getId())) {
-                wrongCunsumptions.add(item);
+        for (Consumption consumption : consumptionList) {
+            if(consumption.getDate().isBefore(LocalDate.now().atStartOfDay()) || !consumption.getUser().getId().equals(user.getId())) {
+                wrongCunsumptions.add(consumption);
             }
         }
         logger.debug("wrong = " + wrongCunsumptions);

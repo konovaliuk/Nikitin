@@ -25,15 +25,14 @@ public class DAOUser implements IDAOUser {
                 statement.setString(2,user.getLastName());
                 statement.setString(3,user.getEmail());
                 statement.setString(4,user.getPassword());
-                statement.setString(5,user.getGender());
+                statement.setString(5,user.getGender().toLowerCase());
                 statement.setInt(6,user.getAge());
                 statement.setDouble(7,user.getWeight());
                 statement.setDouble(8,user.getHeight());
-                statement.setString(9,user.getLifestyle());
+                statement.setString(9,user.getLifestyle().toLowerCase());
 
                 succsessValue = statement.executeUpdate();
-            }
-            catch (SQLException e ) {
+            } catch (SQLException e ) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 logger.error("error occurred while creating a user" + e.getMessage());
@@ -41,8 +40,7 @@ public class DAOUser implements IDAOUser {
             connection.commit();
             connection.setAutoCommit(true);
             logger.info("user has been created");
-        }
-        catch (SQLException e) {
+        } catch (SQLException e) {
             logger.error("error occurred while connecting to a database" + e.getMessage());
         }
         return succsessValue;
@@ -51,13 +49,14 @@ public class DAOUser implements IDAOUser {
     @Override
     public User findUserByEmail(String email) {
         String sqlQuery = "Select * from user where email = ?";
-        User user = new User();
+        User user = null;
         try (Connection connection = DataSourceManager.data().getConnection()) {
             connection.setAutoCommit(false);
-            try ( PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
+            try (PreparedStatement statement = connection.prepareStatement(sqlQuery)) {
                 statement.setString(1,email);
                 ResultSet resultSet = statement.executeQuery();
                 while (resultSet.next()) {
+                    user = new User();
                     user.setId(resultSet.getInt("user_id"));
                     user.setFirstName(resultSet.getString("first_name"));
                     user.setLastName(resultSet.getString("last_name"));
@@ -72,15 +71,16 @@ public class DAOUser implements IDAOUser {
             } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
-                logger.error("error occurred while finding user by id info; " + e.getMessage());
+                logger.error("error occurred while finding user by email info: " + e.getMessage());
             }
             connection.commit();
             connection.setAutoCommit(true);
             logger.debug("user was found by email " + email);
+            return user;
         } catch (SQLException e) {
             logger.error("error occurred while connecting to a database" + e.getMessage());
+            return null;
         }
-        return user;
     }
 
     @Override
@@ -104,9 +104,7 @@ public class DAOUser implements IDAOUser {
                     user.setHeight(resultSet.getDouble("height"));
                     user.setLifestyle(resultSet.getString("lifestyle"));
                     userList.add(user);
-                    logger.info("all users have been found");
                 }
-
             } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
@@ -122,8 +120,9 @@ public class DAOUser implements IDAOUser {
     }
 
         @Override
-    public void update(User user) {
+    public int update(User user) {
         String sqlQuery = "update user Set first_name = ?, last_name = ?, email = ?, password = ?, gender = ?,age = ?, weight = ?, height = ?, lifestyle = ? where user_id = ?";
+        int success = 0;
         try(Connection connection = DataSourceManager.data().getConnection()) {
             connection.setAutoCommit(false);
             try(PreparedStatement statement = connection.prepareStatement(sqlQuery)){
@@ -138,9 +137,8 @@ public class DAOUser implements IDAOUser {
                 statement.setString(9,user.getLifestyle());
                 statement.setInt(10,user.getId());
 
-                statement.executeUpdate();
-            }
-            catch (SQLException e) {
+                success = statement.executeUpdate();
+            } catch (SQLException e) {
                 connection.rollback();
                 connection.setAutoCommit(true);
                 logger.error("error occurred while updating user's info; " + e.getMessage());
@@ -151,6 +149,7 @@ public class DAOUser implements IDAOUser {
         } catch (SQLException e) {
             logger.error("error occurred while connecting to a database" + e.getMessage());
         }
+        return success;
     }
 
     @Override

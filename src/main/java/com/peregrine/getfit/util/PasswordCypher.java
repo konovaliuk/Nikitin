@@ -12,14 +12,12 @@ import java.security.spec.InvalidKeySpecException;
  */
 public class PasswordCypher {
 
-    @SuppressWarnings("serial")
     public static class InvalidHashException extends Exception {
         public InvalidHashException(String message) {
             super(message);
         }
     }
 
-    @SuppressWarnings("serial")
     public static class CannotPerformOperationException extends Exception {
         public CannotPerformOperationException(String message) {
             super(message);

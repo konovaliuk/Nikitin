@@ -104,11 +104,11 @@ public class User implements Serializable {
                 Objects.equals(lastName, user.lastName) &&
                 Objects.equals(email, user.email) &&
                 Objects.equals(password, user.password) &&
-                Objects.equals(gender, user.gender) &&
+                gender.equalsIgnoreCase(user.gender.toLowerCase()) &&
                 Objects.equals(age, user.age) &&
                 Objects.equals(weight, user.weight) &&
                 Objects.equals(height, user.height) &&
-                Objects.equals(lifestyle, user.lifestyle);
+                lifestyle.equalsIgnoreCase(user.lifestyle);
     }
 
     @Override

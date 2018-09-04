@@ -9,7 +9,7 @@ import java.util.ArrayList;
  */
 public interface IDAOUser {
     int createUser(User user);
-    void update(User user);
+    int update(User user);
     boolean delete(User user);
     User findUserByEmail(String email);
     ArrayList<User> findAll();
